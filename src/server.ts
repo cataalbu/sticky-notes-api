@@ -6,11 +6,14 @@ import express from 'express';
 import router from './routes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
-import { errorHandler, logger } from './middleware';
-import { corsOptions } from './config';
+import { errorHandler, logEvents, logger } from './middleware';
+import { corsOptions, connectDb } from './config';
 
 const app = express();
+
+connectDb();
 
 // MIDDLEWARE
 
@@ -32,6 +35,16 @@ app.use('/', (req, res) => res.status(404).json({ message: '404 Not found' }));
 // error handler logger
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
-  console.log('Server running on port', process.env.PORT);
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+  app.listen(process.env.PORT, () => {
+    console.log('Server running on port', process.env.PORT);
+  });
+});
+mongoose.connection.once('error', (err) => {
+  console.log(err);
+  logEvents(
+    `${err.no}\t${err.code}\t${err.syscall}\t${err.hostname}\t`,
+    'mongoErrLog.log'
+  );
 });

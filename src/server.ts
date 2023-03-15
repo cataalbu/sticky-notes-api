@@ -7,9 +7,8 @@ import router from './routes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import logger from './middleware/logger';
-import errorHandler from './middleware/errorHandler';
-import corsOptions from './config/corsOptions';
+import { errorHandler, logger } from './middleware';
+import { corsOptions } from './config';
 
 const app = express();
 

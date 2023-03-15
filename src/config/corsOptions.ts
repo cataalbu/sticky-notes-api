@@ -1,7 +1,7 @@
 import allowedOrigins from './allowedOrigins';
 import { CorsOptions } from 'cors';
 
-const corsOptions: CorsOptions = {
+export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);

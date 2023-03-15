@@ -1,6 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import fs from 'fs';
 import express from 'express';
-import dotenv from 'dotenv';
 import router from './routes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -8,8 +10,6 @@ import cors from 'cors';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
 import corsOptions from './config/corsOptions';
-
-dotenv.config();
 
 const app = express();
 
